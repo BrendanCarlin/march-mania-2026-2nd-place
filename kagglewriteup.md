@@ -2,72 +2,6 @@
 
 **Final result:** 2nd place | Brier score: **0.1149886**
 
----
-
-## Steps to Reproduce
-
-### Requirements
-
-- Python 3.9+
-- ~4 GB RAM
-- ~5 minutes runtime
-
-### 1. Clone the repository
-
-```bash
-git clone https://github.com/BrendanCarlin/march-mania-2026.git
-cd march-mania-2026
-```
-
-### 2. Set up the environment
-
-```bash
-python -m venv .venv
-# Windows
-.venv\Scripts\activate
-# macOS/Linux
-source .venv/bin/activate
-
-pip install -r requirements.txt
-```
-
-### 3. Download competition data
-
-Download all data files from the [Kaggle competition data page](https://www.kaggle.com/competitions/march-machine-learning-mania-2026/data) and place them in a `data/` directory at the repo root. The script requires these files:
-
-```
-data/
-├── MRegularSeasonDetailedResults.csv
-├── MRegularSeasonCompactResults.csv
-├── MNCAATourneyCompactResults.csv
-├── MNCAATourneySeeds.csv
-├── MTeams.csv
-├── MMasseyOrdinals.csv
-├── WRegularSeasonDetailedResults.csv
-├── WRegularSeasonCompactResults.csv
-├── WNCAATourneyCompactResults.csv
-├── WNCAATourneySeeds.csv
-├── WTeams.csv
-└── SampleSubmissionStage2.csv
-```
-
-### 4. Create the output directory
-
-```bash
-mkdir output
-```
-
-### 5. Generate the submission
-
-```bash
-python march-mania-2026.py
-```
-
-Output: `output/submission.csv` — 132,133 rows of win probability predictions for all possible 2026 matchups.
-
-The script is fully deterministic (`random_state=42` on XGBoost; no stochastic elements in LR). Re-running produces a bit-for-bit identical submission to the one that placed 2nd (verified by diff).
-
----
 
 ## Context
 
@@ -75,7 +9,7 @@ The script is fully deterministic (`random_state=42` on XGBoost; no stochastic e
 
 **Data context:** https://www.kaggle.com/competitions/march-machine-learning-mania-2026/data
 
----
+
 
 ## Overview of the Approach
 
@@ -220,7 +154,7 @@ xgb_brier = -cross_val_score(xgb_model, X_train, y_train, cv=10, scoring='neg_br
 
 LR outperformed XGBoost standalone in both genders on CV. The blend's value is XGBoost adding non-linear interactions that LR can't capture, not raw individual performance.
 
----
+
 
 ## Details of the Submission
 
@@ -249,7 +183,7 @@ LR outperformed XGBoost standalone in both genders on CV. The blend's value is X
 
 **Single combined model.** Training men's and women's data together is efficient but sacrifices the ability to tune each tournament's dynamics independently. Separate models with a calibrated ensemble blend might improve both genders.
 
----
+
 
 ## Key Hyperparameter Decisions
 
@@ -267,13 +201,13 @@ LR outperformed XGBoost standalone in both genders on CV. The blend's value is X
 | CV folds | 10 | Stable Brier estimate on small dataset |
 | Default unseeded SeedNum | 17 | One beyond max seed (16) for teams not in tournament |
 
----
+
 
 ## External Data
 
 None. All features were derived from the datasets provided in the competition. Note that Massey ordinals (included in the competition data) cover men's teams only; women's teams received a fixed default value for those features.
 
----
+
 
 ## Open Source / Tooling
 
@@ -281,7 +215,6 @@ None. All features were derived from the datasets provided in the competition. N
 - **scikit-learn** (`LogisticRegression`, `StandardScaler`, `KFold`, `cross_val_score`)
 - **pandas / numpy** for data processing
 
----
 
 ## What I'd Try Next
 
@@ -292,7 +225,71 @@ None. All features were derived from the datasets provided in the competition. N
 5. **Separate men's and women's models** with a post-hoc calibrated blend.
 6. **Tournament-trajectory features**: does a team's path through the bracket affect later-round performance? Hard to measure cleanly but worth exploring.
 
----
+
+## Steps to Reproduce
+
+### Requirements
+
+- Python 3.9+
+- ~4 GB RAM
+- ~5 minutes runtime
+
+### 1. Clone the repository
+
+```bash
+git clone https://github.com/BrendanCarlin/march-mania-2026-2nd-place.git
+cd march-mania-2026-2nd-place
+```
+
+### 2. Set up the environment
+
+```bash
+python -m venv .venv
+# Windows
+.venv\Scripts\activate
+# macOS/Linux
+source .venv/bin/activate
+
+pip install -r requirements.txt
+```
+
+### 3. Download competition data
+
+Download all data files from the [Kaggle competition data page](https://www.kaggle.com/competitions/march-machine-learning-mania-2026/data) and place them in a `data/` directory at the repo root. The script requires these files:
+
+```
+data/
+├── MRegularSeasonDetailedResults.csv
+├── MRegularSeasonCompactResults.csv
+├── MNCAATourneyCompactResults.csv
+├── MNCAATourneySeeds.csv
+├── MTeams.csv
+├── MMasseyOrdinals.csv
+├── WRegularSeasonDetailedResults.csv
+├── WRegularSeasonCompactResults.csv
+├── WNCAATourneyCompactResults.csv
+├── WNCAATourneySeeds.csv
+├── WTeams.csv
+└── SampleSubmissionStage2.csv
+```
+
+### 4. Create the output directory
+
+```bash
+mkdir output
+```
+
+### 5. Generate the submission
+
+```bash
+python march-mania-2026.py
+```
+
+Output: `output/submission.csv` — 132,133 rows of win probability predictions for all possible 2026 matchups.
+
+The script is fully deterministic (`random_state=42` on XGBoost; no stochastic elements in LR). Re-running produces a bit-for-bit identical submission to the one that placed 2nd (verified by diff).
+
+
 
 ## Sources
 
