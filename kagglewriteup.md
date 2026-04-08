@@ -154,6 +154,14 @@ xgb_brier = -cross_val_score(xgb_model, X_train, y_train, cv=10, scoring='neg_br
 
 LR outperformed XGBoost standalone in both genders on CV. The blend's value is XGBoost adding non-linear interactions that LR can't capture, not raw individual performance.
 
+> **A note on the CV–competition gap:** Cross-validation estimated a blended Brier of ~0.192 (men's) and ~0.148 (women's). The final competition score of 0.1149886 outperformed these estimates considerably. This gap does not imply model superiority; rather, it reflects two compounding realities of the tournament:
+>
+> 1. **Small Sample Variance:** With only ~63 scored games per gender, a few predictable matchups heavily skew the final metric.
+>
+> 2. **A "Chalky" Year:** 2026 appears to have been a historically low-upset tournament. This natively rewards conservative models that correctly assign high probabilities to heavy favorites.
+>
+> Ultimately, the CV figures remain the more reliable estimate of what this ensemble will produce in an average tournament year.
+
 
 
 ## Details of the Submission
