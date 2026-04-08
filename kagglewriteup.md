@@ -1,6 +1,6 @@
 # 2nd Place Solution for the March Machine Learning Mania 2026 Competition
 
-**Final result:** 2nd place | Brier score: **0.1149886**
+**Final result:** 2nd place | Brier score: **0.1149886** | **Rank:** 2nd/3,485 teams
 
 
 ## Context
