@@ -6,6 +6,9 @@ env/
 # Kaggle competition data (download separately per competition rules)
 data/
 
+# Output folder for kaggle submission
+output/
+
 # Python cache
 __pycache__/
 *.pyc
