@@ -1,7 +1,19 @@
 """
-Generate full submission covering ALL team matchups.
-Uses the trained model for seeded teams, and a fast Elo/stats-based
-approach for non-seeded teams.
+March Machine Learning Mania 2026 — 2nd Place Solution
+Brier score: 0.1149886
+
+XGBoost + Logistic Regression ensemble (60/40 blend) trained on NCAA tournament
+results from 2003–2025 (men's) and 2010–2025 (women's). Generates win probability
+predictions for all 132,133 possible 2026 matchups across both tournaments.
+
+Features (35 total): season efficiency ratings, Four Factors, margin-of-victory
+Elo, Massey ordinal consensus, seeds, strength of schedule, and recent form —
+all expressed as Team1 − Team2 differences.
+
+Usage:
+    Place competition data files in ./data/
+    python march-mania-2026.py
+    Output written to ./output/submission.csv
 """
 
 import pandas as pd
